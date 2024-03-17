@@ -3,7 +3,7 @@ package Ui;
 import java.util.Scanner;
 
 public class MainUi {
-    public void display() {
+    public void display(String language) {
         String choice;
         do {
             System.out.print("\033[H\033[2J");
@@ -24,13 +24,13 @@ public class MainUi {
 
             switch (choice.toLowerCase()) {
                 case "l":
-                    ListUi.display();
+                    ListUi.display(language);
                     break;
                 case "s":
                     System.out.println("Search a word");
                     break;
                 case "i":
-                    InsertUi.display();
+                    InsertUi.display(language);
                     break;
                 case "u":
                     System.out.println("Update a word");
@@ -39,7 +39,7 @@ public class MainUi {
                     System.out.println("Delete a word");
                     break;
                 case "p":
-                    PracticeUi.display();
+                    PracticeUi.display(language);
                     break;
                 case "e":
                     break;

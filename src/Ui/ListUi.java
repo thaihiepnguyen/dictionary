@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class ListUi {
     private static final WordBus wordBus = (WordBus) Injectable.get(WordBus.class.getName());
-    public static void display() {
+    public static void display(String language) {
         Scanner scanner = new Scanner(System.in);
         String choiceList;
         do {
@@ -24,9 +24,16 @@ public class ListUi {
             choiceList = scanner.next();
             scanner.nextLine();
             if (choiceList.equalsIgnoreCase("l")) {
-                ArrayList<WordDto> wordDtos = wordBus.getAllWords();
-                for (WordDto wordDto : wordDtos) {
-                    System.out.println("- " + wordDto.english + ": " + wordDto.vietnamese);
+                if (language.equalsIgnoreCase("japanese")) {
+                    ArrayList<WordDto> wordDtos = wordBus.getAllJapaneseWords();
+                    for (WordDto wordDto : wordDtos) {
+                        System.out.println("- " + wordDto.source + ": " + wordDto.vietnamese);
+                    }
+                } else {
+                    ArrayList<WordDto> wordDtos = wordBus.getAllEnglishWords();
+                    for (WordDto wordDto : wordDtos) {
+                        System.out.println("- " + wordDto.source + ": " + wordDto.vietnamese);
+                    }
                 }
                 System.out.println("Press any key to continue");
                 scanner.nextLine();

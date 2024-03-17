@@ -24,9 +24,9 @@ public class PracticeUi {
         answerMapping.put("c", 2);
         answerMapping.put("d", 3);
     }
-    public static void display() {
+    public static void display(String language) {
         Scanner scanner = new Scanner(System.in);
-        ArrayList<WordDto> wordDtos = wordBus.practice();
+        ArrayList<WordDto> wordDtos = wordBus.practice(language);
         String choicePractice;
         do {
             System.out.print("\033[H\033[2J");
@@ -43,7 +43,7 @@ public class PracticeUi {
             if (choicePractice.equalsIgnoreCase("m")) {
                 multipleChoicePractice(wordDtos);
             } else if (choicePractice.equalsIgnoreCase("i")) {
-                inputChoicePractice(wordDtos);
+                inputChoicePractice(wordDtos, language);
             }
         } while (!choicePractice.equalsIgnoreCase("b"));
     }
@@ -58,7 +58,7 @@ public class PracticeUi {
             System.out.flush();
             System.out.println("Practice");
             System.out.println("==========");
-            System.out.println((i + 1) + ". What is the translation of '" + wordDtos.get(i).english + "'?");
+            System.out.println((i + 1) + ". What is the translation of '" + wordDtos.get(i).source + "'?");
             System.out.println("==========");
             for (int j = 0; j < MAX_CHOICES; j++) {
                 if (j == answerIndex) {
@@ -87,18 +87,23 @@ public class PracticeUi {
         }
     }
 
-    public static void inputChoicePractice(ArrayList<WordDto> wordDtos) {
+    public static void inputChoicePractice(ArrayList<WordDto> wordDtos, String language) {
         Scanner scanner = new Scanner(System.in);
         for (int i = 0; i < wordDtos.size(); i++) {
             System.out.print("\033[H\033[2J");
             System.out.flush();
             System.out.println("Practice");
             System.out.println("==========");
-            System.out.println((i + 1) + ". What is the translation of '" + wordDtos.get(i).vietnamese + "'?");
+            if (language.equalsIgnoreCase("japanese")) {
+                System.out.println((i + 1) + ". What is the translation of '" + wordDtos.get(i).source + "'?");
+            } else {
+                System.out.println((i + 1) + ". What is the translation of '" + wordDtos.get(i).vietnamese + "'?");
+            }
             System.out.println("==========");
             System.out.print("Your choice: ");
             String choicePractice = scanner.nextLine();
-            if (choicePractice.equalsIgnoreCase(wordDtos.get(i).english)) {
+            if ((language.equalsIgnoreCase("japanese") && choicePractice.equalsIgnoreCase(wordDtos.get(i).vietnamese))
+            || (language.equalsIgnoreCase("english") && choicePractice.equalsIgnoreCase(wordDtos.get(i).source))) {
                 System.out.println("Correct");
             } else {
                 System.out.println("Incorrect");
